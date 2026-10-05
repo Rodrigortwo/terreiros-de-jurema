@@ -44,15 +44,20 @@
     filtroTradicao.appendChild(op);
   });
 
+  /* busca indiferente a acentos: "catimbo" encontra "Catimbó" */
+  function semAcento(s) {
+    return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }
+
   function filtrados() {
-    const q = busca.value.trim().toLowerCase();
+    const q = semAcento(busca.value.trim());
     const uf = filtroUf.value;
     const tr = filtroTradicao.value;
     return TERREIROS.filter(t => {
       if (uf && t.uf !== uf) return false;
       if (tr && !(t.tradicoes || []).includes(tr)) return false;
       if (q) {
-        const alvo = (t.nome + " " + t.dirigente + " " + t.cidade + " " + t.uf + " " + (t.tradicoes || []).join(" ") + " " + t.descricao).toLowerCase();
+        const alvo = semAcento(t.nome + " " + t.dirigente + " " + t.cidade + " " + t.uf + " " + (t.tradicoes || []).join(" ") + " " + t.descricao);
         if (!alvo.includes(q)) return false;
       }
       return true;
@@ -76,7 +81,8 @@
   /* ---------- casas ---------- */
   function cardDe(t) {
     const card = el("button", "terreiro " + acentoDe(t));
-    card.setAttribute("aria-label", t.nome + " — " + t.cidade + ", " + t.uf);
+    /* sem aria-label: o conteúdo interno (nome, selo, dirigente, tradições,
+       descrição, visitas) forma o nome acessível completo */
     card.appendChild(el("span", "uf-badge", t.uf));
     if (t.exemplo) card.appendChild(el("span", "mini-selo", "EXEMPLO"));
     card.appendChild(el("span", "terreiro-nome", t.nome));
@@ -117,8 +123,10 @@
 
     eventos.forEach(({ t, ev }) => {
       const linha = el("button", "evento");
-      linha.setAttribute("aria-label", ev.titulo + " em " + t.nome + ", " + t.cidade);
       const d = parseData(ev.data);
+      linha.setAttribute("aria-label",
+        ev.titulo + ", " + d.getDate() + " de " + MESES[d.getMonth()] +
+        (ev.hora ? " às " + ev.hora : "") + ", " + t.nome + ", " + t.cidade);
 
       const data = el("span", "evento-data");
       data.appendChild(el("span", "evento-dia", String(d.getDate())));
@@ -200,16 +208,39 @@
 
     modal.hidden = false;
     document.body.style.overflow = "hidden";
+
+    /* foco vai para o modal; guarda quem abriu para devolver ao fechar */
+    focoAnterior = document.activeElement;
+    botaoFechar.focus();
+    history.replaceState(null, "", "#casa-" + t.id);
   }
+
+  let focoAnterior = null;
+  const botaoFechar = document.getElementById("modal-fechar");
 
   function fecharModal() {
     modal.hidden = true;
     document.body.style.overflow = "";
+    history.replaceState(null, "", location.pathname + location.search);
+    if (focoAnterior && document.contains(focoAnterior)) focoAnterior.focus();
+    focoAnterior = null;
   }
 
-  document.getElementById("modal-fechar").addEventListener("click", fecharModal);
+  botaoFechar.addEventListener("click", fecharModal);
   modal.addEventListener("click", e => { if (e.target === modal) fecharModal(); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) fecharModal(); });
+  document.addEventListener("keydown", e => {
+    if (modal.hidden) return;
+    if (e.key === "Escape") { fecharModal(); return; }
+    /* prende o Tab dentro do modal enquanto aberto */
+    if (e.key === "Tab") {
+      const focaveis = [...modal.querySelectorAll("button, a[href]")].filter(n => n.offsetParent !== null);
+      if (!focaveis.length) return;
+      const primeiro = focaveis[0];
+      const ultimo = focaveis[focaveis.length - 1];
+      if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
+    }
+  });
 
   /* ---------- animação de entrada ---------- */
   const observador = new IntersectionObserver(entradas => {
@@ -237,4 +268,11 @@
   filtroTradicao.addEventListener("change", aplicar);
 
   aplicar();
+
+  /* link direto: seusite/#casa-<id> abre o modal daquela casa */
+  if (location.hash.indexOf("#casa-") === 0) {
+    const idInicial = decodeURIComponent(location.hash.slice("#casa-".length));
+    const alvo = TERREIROS.find(t => t.id === idInicial);
+    if (alvo) abrirModal(alvo);
+  }
 })();

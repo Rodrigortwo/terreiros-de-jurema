@@ -7,7 +7,8 @@
    3. Salve, faça commit e push — o site atualiza sozinho.
 
    CAMPOS:
-   - id .......... apelido único, sem espaços (ex: "casa-da-mata-pb")
+   - id .......... apelido único, sem espaços (ex: "casa-da-mata-pb");
+                   vira o link direto da casa: seusite/#casa-<id>
    - nome ........ nome da casa como ela quer aparecer
    - dirigente ... quem dirige (Mestre/Mestra/Pai/Mãe...)
    - tradicoes ... lista: "Jurema de mesa", "Jurema de chão",
@@ -108,7 +109,7 @@ const TERREIROS = [
   },
   {
     id: "exemplo-sao-paulo",
-    nome: "Tenda do Caboclo Flecheiro",
+    nome: "Tenda Paulistana do Exemplo",
     dirigente: "Pai do exemplo — vaga aberta",
     tradicoes: ["Umbanda cruzada com Jurema"],
     cidade: "São Paulo",

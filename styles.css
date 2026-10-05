@@ -43,7 +43,7 @@ body {
 .logo span { color: var(--texto); font-weight: 500; }
 .logo-folha { width: 20px; height: 20px; color: var(--ouro); flex-shrink: 0; }
 .nav { display: flex; gap: 20px; margin-left: auto; }
-.nav a { color: var(--texto-suave); text-decoration: none; font-size: .9rem; font-weight: 500; }
+.nav a { color: var(--texto-suave); text-decoration: none; font-size: .9rem; font-weight: 500; white-space: nowrap; }
 .nav a:hover { color: var(--ouro-claro); }
 
 /* ---------- hero ---------- */
@@ -138,7 +138,7 @@ body {
 }
 .evento:hover, .evento:focus-visible {
   transform: translateY(-2px); border-color: var(--ouro-fosco);
-  box-shadow: 0 10px 26px rgba(0,0,0,.4); outline: none;
+  box-shadow: 0 10px 26px rgba(0,0,0,.4);
 }
 .evento-data {
   flex: 0 0 62px; text-align: center;
@@ -172,7 +172,13 @@ body {
 }
 .terreiro:hover, .terreiro:focus-visible {
   transform: translateY(-4px); border-color: var(--ouro-fosco);
-  box-shadow: 0 16px 40px rgba(0,0,0,.5); outline: none;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+}
+/* foco de teclado sempre visível e distinto do hover */
+.terreiro:focus-visible, .evento:focus-visible, .btn:focus-visible,
+.modal-fechar:focus-visible, .nav a:focus-visible, .logo:focus-visible {
+  outline: 2px solid var(--ouro);
+  outline-offset: 2px;
 }
 .terreiro.acc-ouro  { --acc: var(--ouro); }
 .terreiro.acc-mata  { --acc: var(--mata); }
@@ -203,7 +209,7 @@ body {
   color: #221a08; font-size: .62rem; font-weight: 800;
   letter-spacing: .1em; padding: 4px 9px; border-radius: 4px;
 }
-.visitas-badge { color: var(--mata); font-size: .8rem; font-weight: 600; }
+.visitas-badge { color: #4caf7d; font-size: .8rem; font-weight: 600; }
 .visitas-badge.fechada { color: var(--texto-suave); }
 .grid-vazio { color: var(--texto-suave); padding: 10px 0 30px; grid-column: 1 / -1; }
 
@@ -232,7 +238,7 @@ body {
   border-top: 1px solid rgba(255,255,255,.06);
 }
 .cadastro h2 { font-family: var(--serif); font-weight: 900; font-size: 2rem; margin-bottom: 6px; }
-.cadastro h2::after { content: "✦"; display: block; color: var(--ouro); font-size: .8rem; margin-top: 12px; }
+.cadastro h2::after { content: "✦"; content: "✦" / ""; display: block; color: var(--ouro); font-size: .8rem; margin-top: 12px; }
 .cadastro-sub { color: var(--texto-suave); margin: 10px auto 40px; max-width: 640px; }
 .cadastro-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
@@ -247,6 +253,8 @@ body {
 .cadastro-card:hover { transform: translateY(-4px); border-top-color: var(--ouro); }
 .cadastro-card h3 { margin-bottom: 10px; font-size: 1.04rem; }
 .cadastro-card p { color: var(--texto-suave); font-size: .93rem; }
+.cadastro-nota { color: var(--texto-suave); font-size: .88rem; margin-top: 16px; }
+.cadastro-nota strong { color: var(--ouro-claro); }
 
 /* ---------- rodapé ---------- */
 .rodape { padding: 46px 4vw 64px; text-align: center; border-top: 1px solid rgba(255,255,255,.07); }
@@ -261,14 +269,17 @@ body {
 }
 .modal-fundo[hidden] { display: none; }
 .modal {
-  position: relative; width: min(680px, 100%); max-height: 88vh; overflow-y: auto;
+  position: relative; width: min(680px, 100%); max-height: 88vh;
+  display: flex; flex-direction: column; overflow: hidden;
   background: var(--painel); border: 1px solid var(--ouro-fosco);
   border-radius: 16px; box-shadow: 0 34px 90px rgba(0,0,0,.75), 0 0 60px rgba(212,161,58,.08);
   animation: subir .28s ease;
 }
+/* a rolagem fica no corpo: capa e botão de fechar permanecem sempre visíveis */
+.modal-corpo { overflow-y: auto; }
 @keyframes subir { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 .modal-capa {
-  position: relative; height: 150px; border-radius: 16px 16px 0 0;
+  position: relative; height: 150px; flex-shrink: 0; border-radius: 16px 16px 0 0;
   background: var(--estrelas), linear-gradient(160deg, #0d2417, #1d5435 60%, #2e7d4f);
 }
 .modal-capa.acc-ouro  { background: var(--estrelas), linear-gradient(160deg, #3d2d0d, #936c1e 60%, #d4a13a); }
@@ -307,7 +318,7 @@ body {
   padding: 8px 0 8px 30px; position: relative; color: var(--texto);
   font-size: .95rem; border-bottom: 1px dashed rgba(255,255,255,.08);
 }
-.modal-corpo li::before { content: "🌿"; position: absolute; left: 0; }
+.modal-corpo li::before { content: "🌿"; content: "🌿" / ""; position: absolute; left: 0; }
 .modal-endereco { color: var(--texto-suave); font-size: .95rem; margin-bottom: 12px; }
 .modal-contato { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
 .modal-contato .btn { padding: 10px 20px; font-size: .9rem; }
@@ -322,6 +333,7 @@ body {
 .reveal.visivel { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
+  .modal { animation: none; }
   html { scroll-behavior: auto; }
 }
 
@@ -330,6 +342,7 @@ body {
   .nav { gap: 14px; }
   .nav a { font-size: .82rem; }
   .hero { padding-top: 120px; }
+  .hero-chapeu { letter-spacing: .2em; font-size: .66rem; }
   .hero-ramo { width: 58vw; opacity: .1; }
   .filtros { gap: 10px; }
   .filtro { flex: 1 1 40%; }
@@ -337,7 +350,10 @@ body {
   .evento-hora { order: 3; }
   .modal-corpo { padding: 22px; }
 }
+/* abaixo de 620px o header não comporta a navegação em uma linha */
+@media (max-width: 620px) {
+  .nav { display: none; }
+}
 @media (max-width: 480px) {
   .logo { font-size: .92rem; }
-  .nav { display: none; }
 }

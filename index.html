@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terreiros de Jurema</title>
+  <meta name="description" content="Terreiros de Jurema — casas de Jurema Sagrada pelo Brasil, com agenda de giras e festas públicas. Encontre, entre em contato e chegue com respeito." />
+  <meta property="og:title" content="Terreiros de Jurema" />
+  <meta property="og:description" content="Casas de Jurema Sagrada pelo Brasil, com agenda de giras e festas públicas." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="topo" id="topo">
+    <a class="logo" href="#"><svg class="logo-folha" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C7 7 5 12 5 16c0 3.3 2.9 6 7 6s7-2.7 7-6c0-4-2-9-7-14zm0 4.6c3.2 3.7 4.6 7.2 4.6 9.4 0 2.1-2 3.9-4.6 3.9S7.4 18.1 7.4 16c0-2.2 1.4-5.7 4.6-9.4z" fill="currentColor"/><path d="M12 7v13" stroke="currentColor" stroke-width="1.1"/></svg>TERREIROS<span> DE JUREMA</span></a>
+    <nav class="nav">
+      <a href="#agenda">Agenda</a>
+      <a href="#casas">Casas</a>
+      <a href="#cadastro">Cadastre sua casa</a>
+    </nav>
+  </header>
+
+  <!-- HERO com busca -->
+  <section class="hero" aria-label="Busca de terreiros">
+    <div class="hero-conteudo">
+      <p class="hero-chapeu">✦ &nbsp;CASAS DE JUREMA PELO BRASIL&nbsp; ✦</p>
+      <h1 class="hero-titulo">Onde a Jurema abre as portas</h1>
+      <p class="hero-desc">Encontre casas de Jurema Sagrada pelo Brasil, veja a agenda de giras e festas públicas e chegue com respeito.</p>
+      <div class="filtros">
+        <input id="busca" class="busca" type="search" placeholder="Buscar casa, cidade ou dirigente…" aria-label="Buscar casa, cidade ou dirigente" />
+        <select id="filtro-uf" class="filtro" aria-label="Filtrar por estado">
+          <option value="">Todos os estados</option>
+        </select>
+        <select id="filtro-tradicao" class="filtro" aria-label="Filtrar por tradição">
+          <option value="">Todas as tradições</option>
+        </select>
+      </div>
+    </div>
+    <svg class="hero-ramo" viewBox="0 0 400 400" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M200 390 C 200 280, 210 170, 260 60" />
+        <path d="M212 330 C 250 318, 282 288, 292 250" /><path d="M212 330 C 198 296, 200 262, 214 236" transform="rotate(8 212 330)"/>
+        <path d="M222 270 C 258 260, 288 232, 296 196" /><path d="M222 270 C 206 240, 206 210, 220 186" />
+        <path d="M234 210 C 268 200, 294 174, 300 140" /><path d="M234 210 C 220 182, 222 152, 236 130" />
+        <path d="M248 150 C 278 140, 300 116, 304 86" /><path d="M248 150 C 236 124, 240 98, 252 78" />
+      </g>
+      <g fill="currentColor">
+        <ellipse cx="292" cy="250" rx="7" ry="16" transform="rotate(35 292 250)"/>
+        <ellipse cx="296" cy="196" rx="7" ry="16" transform="rotate(32 296 196)"/>
+        <ellipse cx="300" cy="140" rx="7" ry="16" transform="rotate(28 300 140)"/>
+        <ellipse cx="304" cy="86"  rx="7" ry="16" transform="rotate(24 304 86)"/>
+        <ellipse cx="262" cy="56"  rx="8" ry="18" transform="rotate(12 262 56)"/>
+        <ellipse cx="214" cy="236" rx="6" ry="14" transform="rotate(-30 214 236)"/>
+        <ellipse cx="220" cy="186" rx="6" ry="14" transform="rotate(-28 220 186)"/>
+        <ellipse cx="236" cy="130" rx="6" ry="14" transform="rotate(-24 236 130)"/>
+        <ellipse cx="252" cy="78"  rx="6" ry="14" transform="rotate(-18 252 78)"/>
+      </g>
+    </svg>
+    <div class="hero-veu"></div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="faixa-manifesto">
+    <p><strong>Aqui só entra casa que pediu para entrar.</strong> Cada terreiro controla o que aparece — nome, contato, endereço e agenda. Endereço é dado sensível: muitas casas preferem receber primeiro uma mensagem. <em>As casas abaixo são exemplos fictícios</em> até as primeiras casas reais se cadastrarem.</p>
+  </section>
+
+  <main>
+    <!-- AGENDA -->
+    <section class="secao" id="agenda" aria-label="Próximas giras e festas">
+      <h2>Próximas giras e festas</h2>
+      <p class="secao-sub">Somente eventos que as casas declararam públicos.</p>
+      <div id="agenda-lista" class="agenda-lista"></div>
+    </section>
+
+    <!-- CASAS -->
+    <section class="secao" id="casas" aria-label="Casas de Jurema">
+      <h2>Casas</h2>
+      <p class="secao-sub" id="contagem-casas"></p>
+      <div id="grid-terreiros" class="grid-terreiros"></div>
+    </section>
+  </main>
+
+  <!-- CADASTRE SUA CASA -->
+  <section class="cadastro" id="cadastro">
+    <h2>Cadastre sua casa</h2>
+    <p class="cadastro-sub">O catálogo é gratuito e existe para que quem procura a Jurema encontre casa séria para conhecer.</p>
+    <div class="cadastro-grid">
+      <div class="cadastro-card">
+        <h3>🌿 A casa manda</h3>
+        <p>Só publicamos o que a casa aprovar — nome, foto, contato, descrição. Nada entra sem pedido da própria casa, e sai na hora que ela pedir.</p>
+      </div>
+      <div class="cadastro-card">
+        <h3>🔒 Endereço protegido</h3>
+        <p>Se preferir, a casa aparece só com cidade e contato. Quem quiser visitar manda mensagem primeiro — do jeito que sempre foi.</p>
+      </div>
+      <div class="cadastro-card">
+        <h3>📅 Agenda viva</h3>
+        <p>A casa manda as giras e festas públicas do mês, e a agenda atualiza. Evento fechado para a corrente não aparece aqui.</p>
+      </div>
+    </div>
+    <a class="btn btn-ouro btn-grande" href="mailto:contato@cienciadajurema.com.br?subject=Quero%20cadastrar%20minha%20casa%20no%20Terreiros%20de%20Jurema">Quero cadastrar minha casa</a>
+  </section>
+
+  <footer class="rodape">
+    <p><strong>Terreiros de Jurema</strong> — um projeto da Ciência da Jurema Sagrada.</p>
+    <p class="rodape-nota">Este catálogo é informativo e devocional. Não promete resultado espiritual, não substitui a orientação de uma casa e não publica fundamento reservado. Visite com respeito: mande mensagem antes, pergunte como a casa recebe e siga a orientação de quem é da casa. Salve a Jurema Sagrada! 🌿</p>
+  </footer>
+
+  <!-- MODAL DA CASA -->
+  <div class="modal-fundo" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <button class="modal-fechar" id="modal-fechar" aria-label="Fechar">✕</button>
+      <div class="modal-capa" id="modal-capa"><span id="modal-selo" class="selo" hidden>EXEMPLO</span></div>
+      <div class="modal-corpo">
+        <h2 id="modal-titulo"></h2>
+        <p class="modal-dirigente" id="modal-dirigente"></p>
+        <p class="modal-local" id="modal-local"></p>
+        <div class="chips" id="modal-tradicoes"></div>
+        <p class="modal-desc" id="modal-desc"></p>
+        <h3>Agenda da casa</h3>
+        <ul id="modal-agenda"></ul>
+        <h3>Contato e visita</h3>
+        <p class="modal-endereco" id="modal-endereco"></p>
+        <div class="modal-contato" id="modal-contato"></div>
+        <p class="modal-etiqueta">Antes de ir: mande mensagem, pergunte como a casa recebe visita, chegue antes do início e siga a orientação de quem é da casa. Roupa discreta é bem-vinda — branco, melhor ainda.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="terreiros.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
